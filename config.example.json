@@ -1,0 +1,48 @@
+{
+  "xianyu": {
+    "cookie": "请在这里填写您的闲鱼Cookie",
+    "token": "",
+    "user_id": "",
+    "auto_reply_interval": 5,
+    "check_interval": 10
+  },
+  "auto_delivery": {
+    "enabled": true,
+    "delivery_delay": 3,
+    "confirm_delivery": false
+  },
+  "auto_reply": {
+    "enabled": true,
+    "rules": [
+      {
+        "keywords": ["在吗", "在么", "在不在"],
+        "response": "您好，商品还在的，可以直接下单购买，付款后自动发货~",
+        "match_type": "fuzzy"
+      },
+      {
+        "keywords": ["怎么买", "怎么下单", "如何购买"],
+        "response": "点击商品页面的【我想要】或【立即购买】即可下单，付款后系统会自动发货~",
+        "match_type": "fuzzy"
+      },
+      {
+        "keywords": ["价格", "多少钱", "优惠"],
+        "response": "价格就是页面标价哦，已经很优惠了，可以直接下单~",
+        "match_type": "fuzzy"
+      },
+      {
+        "keywords": ["是正品吗", "真的吗", "靠谱吗"],
+        "response": "保证正品，可以放心购买，有问题随时联系~",
+        "match_type": "fuzzy"
+      }
+    ]
+  },
+  "products": {
+    "example_product": {
+      "name": "示例商品-激活码",
+      "card_file": "cards_example_product.txt",
+      "message_template": "感谢您的购买！🎉\n\n您的激活码：\n{card_content}\n\n使用方法：\n1. 打开软件/网站\n2. 输入激活码\n3. 点击激活\n\n如有问题请联系客服，祝您使用愉快！~",
+      "auto_delivery": true,
+      "auto_reply": true
+    }
+  }
+}
