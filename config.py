@@ -15,14 +15,41 @@ class Config:
     
     def _load_config(self) -> Dict[str, Any]:
         """加载配置文件"""
+        config = self._default_config()
+        
+        # 从文件加载
         if os.path.exists(self.config_file):
-            with open(self.config_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return self._default_config()
+            try:
+                with open(self.config_file, 'r', encoding='utf-8') as f:
+                    file_config = json.load(f)
+                    self._merge_config(config, file_config)
+            except:
+                pass
+        
+        # 从环境变量加载（优先级最高）
+        if os.environ.get("XIANYU_COOKIE"):
+            config["xianyu"]["cookie"] = os.environ.get("XIANYU_COOKIE")
+        if os.environ.get("XIANYU_TOKEN"):
+            config["xianyu"]["token"] = os.environ.get("XIANYU_TOKEN")
+        if os.environ.get("PORT"):
+            config["server"]["port"] = int(os.environ.get("PORT", 8080))
+        
+        return config
+    
+    def _merge_config(self, base: Dict, override: Dict):
+        """合并配置"""
+        for key, value in override.items():
+            if key in base and isinstance(base[key], dict) and isinstance(value, dict):
+                self._merge_config(base[key], value)
+            else:
+                base[key] = value
     
     def _default_config(self) -> Dict[str, Any]:
         """默认配置"""
         return {
+            "server": {
+                "port": 8080
+            },
             "xianyu": {
                 "cookie": "",
                 "token": "",
